@@ -10,7 +10,7 @@ app = Flask(__name__)
 OCR_SPACE_API_URL = "https://api.ocr.space/parse/image"
 OCR_SPACE_API_KEY = os.environ.get('OCR_SPACE_API_KEY')
 if not OCR_SPACE_API_KEY:
-    OCR_SPACE_API_KEY = "YOUR_OCR_SPACE_API_KEY_HERE"
+    OCR_SPACE_API_KEY = "K87955728688957"
     print("Warning: Using hardcoded OCR Space API key. Use environment variables in production!")
 
 
