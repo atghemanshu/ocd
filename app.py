@@ -165,7 +165,7 @@ def index():
                 comparison_error = None
 
                 if extracted_text and not extracted_text.startswith("Error"): # Proceed only if text extraction was successful
-                    if file_extension == ['docx', 'pdf','png', 'jpg', 'jpeg', 'bmp', 'gif', 'tiff']: # Only process structured data for DOCX for now (can extend to images/PDFs later)
+                    if file_extension in ['docx', 'pdf','png', 'jpg', 'jpeg', 'bmp', 'gif', 'tiff']: # Only process structured data for DOCX for now (can extend to images/PDFs later)
                         structured_data = extract_structured_data(extracted_text)
                         sr_no_value = structured_data.get("Sr no.") # Assuming "Sr no." is the key to database
                         if sr_no_value:
