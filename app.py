@@ -80,13 +80,23 @@ def extract_text_from_file(file_path, filename):
 # --- NEW FUNCTIONS ---
 
 def extract_structured_data(text):
-    """Extracts structured data (key-value pairs) from text."""
+    """Extracts specific structured data fields from text (Sr no., Name, etc.)."""
     data = {}
     lines = text.strip().split('\n')
-    for line in lines:
-        if ":" in line:
-            key, value = line.split(":", 1) # Split only at the first ':'
-            data[key.strip()] = value.strip()
+    field_names = ["Sr no.", "Name", "City", "Age", "Country", "Address"] # List of fields to extract
+
+    for field in field_names:
+        for line in lines:
+            if line.lower().startswith(field.lower() + ":"): # Case-insensitive matching and handles variations in spacing
+                try:
+                    key, value = line.split(":", 1) # Split only at the first ':'
+                    data[key.strip()] = value.strip()
+                    break # Move to the next field once found
+                except ValueError:
+                    continue # If split fails, move to the next line
+        if field not in data: # If field not found in text, add it with None value
+            data[field] = None # or "" if you prefer empty string
+
     return data
 
 # Dummy database (replace with actual database in real application)
