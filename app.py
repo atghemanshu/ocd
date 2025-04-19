@@ -1,8 +1,9 @@
 from flask import Flask, render_template, request, redirect, url_for
-import os
-import requests
 from pdfminer.high_level import extract_text as pdf_extract_text
 from docx import Document as DocxDocument
+import os
+import requests
+import re 
 
 app = Flask(__name__)
 
@@ -13,6 +14,12 @@ if not OCR_SPACE_API_KEY:
     OCR_SPACE_API_KEY = "K87955728688957"
     print("Warning: Using hardcoded OCR Space API key. Use environment variables in production!")
 
+# --- Add this Context Processor ---
+@app.context_processor
+def inject_utilities():
+    """Injects utility functions into the template context."""
+    return dict(get_database_data=get_database_data)
+# ----------------------------------
 
 def ocr_image_via_api(image_path):
     """Performs OCR on an image using OCR Space API."""
@@ -80,25 +87,34 @@ def extract_text_from_file(file_path, filename):
 # --- NEW FUNCTIONS ---
 
 def extract_structured_data(text):
-    """Extracts specific structured data fields from text (Sr no., Name, etc.)."""
+    """Extracts specific structured data fields from text using regex."""
     data = {}
+    # Define the fields we want to extract
+    field_names = ["Sr no.", "Name", "City", "Age", "Country", "Address"]
+    # Initialize all expected fields with None
+    for field in field_names:
+        data[field] = None
+
     lines = text.strip().split('\n')
-    field_names = ["Sr no.", "Name", "City", "Age", "Country", "Address"] # List of fields to extract
 
     for field in field_names:
+        # Create a regex pattern for each field:
+        # - ^\s* : Start of the line with optional leading whitespace
+        # - re.escape(field): The field name itself (escaped in case of special characters)
+        # - \s*:\s*: Optional whitespace around the colon
+        # - (.*) : Capture group for the value (everything after the colon)
+        # - re.IGNORECASE: Make the matching case-insensitive
+        pattern = re.compile(r"^\s*" + re.escape(field) + r"\s*:\s*(.*)", re.IGNORECASE)
+
         for line in lines:
-            if line.lower().startswith(field.lower() + ":"): # Case-insensitive matching and handles variations in spacing
-                try:
-                    key, value = line.split(":", 1) # Split only at the first ':'
-                    data[key.strip()] = value.strip()
-                    break # Move to the next field once found
-                except ValueError:
-                    continue # If split fails, move to the next line
-        if field not in data: # If field not found in text, add it with None value
-            data[field] = None # or "" if you prefer empty string
+            match = pattern.match(line.strip()) # Use match() to ensure it's at the beginning of the line
+            if match:
+                value = match.group(1).strip() # Get the captured group (the value) and strip whitespace
+                # Store using the canonical field name from field_names
+                data[field] = value
+                break # Found this field, move to the next field_name
 
     return data
-
 # Dummy database (replace with actual database in real application)
 dummy_database = {
     "S001": {
