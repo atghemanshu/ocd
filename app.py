@@ -132,8 +132,71 @@ dummy_database = {
         "Age": "30",
         "Country": "USA",
         "Address": "123 Main St"
+    },
+    "S003": {
+        "Sr no.": "S003",
+        "Name": "Sarah Johnson",
+        "City": "London",
+        "Age": "27",
+        "Country": "UK",
+        "Address": "45 Oxford Street"
+    },
+    "S004": {
+        "Sr no.": "S004",
+        "Name": "Raj Patel",
+        "City": "Mumbai",
+        "Age": "32",
+        "Country": "India",
+        "Address": "201, Sea View Apartments"
+    },
+    "S005": {
+        "Sr no.": "S005",
+        "Name": "Maria Garcia",
+        "City": "Barcelona",
+        "Age": "29",
+        "Country": "Spain",
+        "Address": "Carrer de Mallorca, 15"
+    },
+    "S006": {
+        "Sr no.": "S006",
+        "Name": "Akira Tanaka",
+        "City": "Tokyo",
+        "Age": "35",
+        "Country": "Japan",
+        "Address": "2-1-3 Shibuya"
+    },
+    "S007": {
+        "Sr no.": "S007",
+        "Name": "Chen Wei",
+        "City": "Shanghai",
+        "Age": "26",
+        "Country": "China",
+        "Address": "88 Nanjing Road"
+    },
+    "S008": {
+        "Sr no.": "S008",
+        "Name": "Lucas Silva",
+        "City": "São Paulo",
+        "Age": "31",
+        "Country": "Brazil",
+        "Address": "Rua Augusta, 1200"
+    },
+    "S009": {
+        "Sr no.": "S009",
+        "Name": "Olivia Miller",
+        "City": "Sydney",
+        "Age": "28",
+        "Country": "Australia",
+        "Address": "42 Bondi Beach Road"
+    },
+    "S010": {
+        "Sr no.": "S010",
+        "Name": "Ahmed Hassan",
+        "City": "Cairo",
+        "Age": "33",
+        "Country": "Egypt",
+        "Address": "17 Al Tahrir Square"
     }
-    # Add more dummy data as needed
 }
 
 
